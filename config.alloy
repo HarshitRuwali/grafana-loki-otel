@@ -3,18 +3,25 @@ otelcol.receiver.otlp "default" {
   grpc {}
 
   output {
-    logs    = [otelcol.processor.batch.default.input]
+    logs = [otelcol.processor.batch.default.input]
   }
 }
 
 otelcol.processor.batch "default" {
   output {
-    logs    = [otelcol.exporter.otlphttp.default.input]
+    logs = [otelcol.exporter.otlphttp.default.input]
   }
+}
+
+otelcol.auth.basic "creds" {
+  username = "harshit"
+  password = "ruwali"
 }
 
 otelcol.exporter.otlphttp "default" {
   client {
-    endpoint = "http://loki:3100/otlp"
+    endpoint = "http://host.docker.internal:3100/otlp"
+    auth = otelcol.auth.basic.creds.handler
   }
 }
+

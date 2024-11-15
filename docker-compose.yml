@@ -23,20 +23,20 @@ services:
     networks:
       - monitoring
 
-  otel-collector:
-    image: otel/opentelemetry-collector:latest
-    container_name: otel
-    volumes:
-      - ./otel-config.yaml:/etc/otel/config.yaml
-    command:
-      - '--config=/etc/otel/config.yaml'
-    # ports:
-    #   - "4317:4317" #grpc
-    #   - "4318:4318" #http
-    depends_on:
-      - loki
-    networks:
-      - monitoring
+  # otel-collector:
+  #   image: otel/opentelemetry-collector:latest
+  #   container_name: otel
+  #   volumes:
+  #     - ./otel-config.yaml:/etc/otel/config.yaml
+  #   command:
+  #     - '--config=/etc/otel/config.yaml'
+  #   # ports:
+  #   #   - "4317:4317" #grpc
+  #   #   - "4318:4318" #http
+  #   depends_on:
+  #     - loki
+  #   networks:
+  #     - monitoring
 
   nginx:
     image: nginx:latest
@@ -48,10 +48,10 @@ services:
       - "3100:3100"
     volumes:
       - ./loki.conf:/etc/nginx/conf.d/loki.conf
-      - ./otel.conf:/etc/nginx/conf.d/otel.conf
+      # - ./otel.conf:/etc/nginx/conf.d/otel.conf
       - ./grafana.conf:/etc/nginx/conf.d/grafana.conf
       - ./htpasswd_loki:/etc/nginx/.htpasswd_loki
-      - ./htpasswd_otel:/etc/nginx/.htpasswd_otel
+      # - ./htpasswd_otel:/etc/nginx/.htpasswd_otel
       - /dev/null:/etc/nginx/conf.d/default.conf  # Disable the default configuration
     # command: /bin/sh -c "[ ! -d /etc/nginx/sites-enabled ] && mkdir /etc/nginx/sites-enabled; ln -s /etc/nginx/sites-available/loki.conf /etc/nginx/sites-enabled/loki.conf && ln -s /etc/nginx/sites-available/otel.conf /etc/nginx/sites-enabled/otel.conf && ln -s /etc/nginx/sites-available/grafana.conf /etc/nginx/sites-enabled/grafana.conf && nginx -g 'daemon off;'"
     # command: /bin/sh -c "mkdir -p /etc/nginx/sites-enabled && ln -s /etc/nginx/sites-available/*.conf /etc/nginx/sites-enabled/ && nginx -g 'daemon off;'"
@@ -60,7 +60,7 @@ services:
     depends_on:
       - grafana
       - loki
-      - otel-collector
+      # - otel-collector
 
 networks:
   monitoring:
