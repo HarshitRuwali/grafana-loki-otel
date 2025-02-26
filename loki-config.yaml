@@ -33,8 +33,17 @@ storage_config:
   tsdb_shipper:
     active_index_directory: /tmp/loki/index
     cache_location: /tmp/loki/index_cache
+    # shared_store: s3  # Define S3 as the shared store for tsdb shipper
   filesystem:
     directory: /tmp/loki/chunks
+  aws:
+    bucketnames: bhive-grafana-alloy-logs
+    endpoint: s3.amazonaws.com
+    region: ap-south-1
+    access_key_id: 
+    secret_access_key: 
+    # sse_encryption: false  # Set to true if using server-side encryption
+    insecure: false  # Set to true if using HTTP instead of HTTPS
 
 pattern_ingester:
   enabled: true

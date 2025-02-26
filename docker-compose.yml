@@ -19,7 +19,7 @@ services:
     volumes:
       - ./loki-config.yaml:/etc/loki/local-config.yaml
       - ./data/loki:/data/loki
-    command: -config.file=/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml -config.expand-env=true
     networks:
       - monitoring
 
