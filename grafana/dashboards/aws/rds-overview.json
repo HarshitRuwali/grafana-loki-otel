@@ -1,0 +1,434 @@
+{
+  "__inputs__": [],
+  "__requires__": [
+    {
+      "id": "grafana",
+      "name": "Grafana",
+      "type": "grafana",
+      "version": "11.0.0"
+    },
+    {
+      "id": "cloudwatch",
+      "name": "CloudWatch",
+      "type": "datasource",
+      "version": "1.0.0"
+    }
+  ],
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "DBInstanceIdentifier": "*"
+          },
+          "expression": "REMOVE_EMPTY(SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"CPUUtilization\"', 'Maximum', 300))",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 1,
+          "metricName": "CPUUtilization",
+          "metricQueryType": 0,
+          "namespace": "AWS/RDS",
+          "period": "300",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "ap-south-1",
+          "statistic": "Maximum"
+        }
+      ],
+      "title": "RDS CPU Utilization",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "lineWidth": 2,
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "DBInstanceIdentifier": "*"
+          },
+          "expression": "REMOVE_EMPTY(SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"DatabaseConnections\"', 'Average', 300))",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 1,
+          "metricName": "DatabaseConnections",
+          "metricQueryType": 0,
+          "namespace": "AWS/RDS",
+          "period": "300",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "ap-south-1",
+          "statistic": "Average"
+        }
+      ],
+      "title": "RDS Database Connections",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "lineWidth": 2,
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 2147483648
+              },
+              {
+                "color": "green",
+                "value": 8589934592
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "DBInstanceIdentifier": "*"
+          },
+          "expression": "REMOVE_EMPTY(SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"FreeableMemory\"', 'Average', 300))",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 1,
+          "metricName": "FreeableMemory",
+          "metricQueryType": 0,
+          "namespace": "AWS/RDS",
+          "period": "300",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "ap-south-1",
+          "statistic": "Average"
+        }
+      ],
+      "title": "RDS Freeable Memory",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "lineWidth": 2,
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.05
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "Read",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "DBInstanceIdentifier": "*"
+          },
+          "expression": "REMOVE_EMPTY(SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"ReadLatency\"', 'Average', 300))",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 1,
+          "metricName": "ReadLatency",
+          "metricQueryType": 0,
+          "namespace": "AWS/RDS",
+          "period": "300",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "ap-south-1",
+          "statistic": "Average"
+        },
+        {
+          "alias": "Write",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "DBInstanceIdentifier": "*"
+          },
+          "expression": "REMOVE_EMPTY(SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"WriteLatency\"', 'Average', 300))",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 1,
+          "metricName": "WriteLatency",
+          "metricQueryType": 0,
+          "namespace": "AWS/RDS",
+          "period": "300",
+          "queryMode": "Metrics",
+          "refId": "B",
+          "region": "ap-south-1",
+          "statistic": "Average"
+        }
+      ],
+      "title": "RDS Read/Write Latency",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "aws",
+    "rds",
+    "cloudwatch"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "cloudwatch",
+          "value": "cloudwatch"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "cloudwatch",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "AWS RDS Overview",
+  "uid": "aws-rds-overview",
+  "version": 1,
+  "weekStart": ""
+}

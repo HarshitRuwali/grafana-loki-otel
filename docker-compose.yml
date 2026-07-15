@@ -3,6 +3,9 @@ services:
   grafana:
     container_name: grafana_compose
     image: grafana/grafana:latest
+    environment:
+      GF_SERVER_ROOT_URL: https://grafana.domain.com
+      GF_SERVER_DOMAIN: grafana.domain.com
     # ports:
     #   - "3000:3000"
     volumes:

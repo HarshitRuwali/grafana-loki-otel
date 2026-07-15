@@ -1,0 +1,483 @@
+apiVersion: 1
+groups:
+- orgId: 1
+  name: aws-rds
+  folder: AWS Infrastructure
+  interval: 1m
+  rules:
+  - uid: aws-rds-high-connections
+    title: RDS High Connections
+    condition: C
+    data:
+    - refId: A
+      datasourceUid: de3t7rxv00we8c
+      queryType: ''
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        datasource:
+          type: cloudwatch
+          uid: de3t7rxv00we8c
+        dimensions:
+          DBInstanceIdentifier: '*'
+        matchExact: true
+        metricEditorMode: 1
+        metricName: DatabaseConnections
+        metricQueryType: 0
+        namespace: AWS/RDS
+        period: '300'
+        queryMode: Metrics
+        refId: A
+        region: ap-south-1
+        statistic: Average
+        expression: REMOVE_EMPTY(SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName="DatabaseConnections"', 'Average', 300))
+    - refId: B
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params: []
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - B
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: A
+        intervalMs: 1000
+        maxDataPoints: 43200
+        reducer: last
+        refId: B
+        type: reduce
+    - refId: C
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 100
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - C
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: B
+        intervalMs: 1000
+        maxDataPoints: 43200
+        refId: C
+        type: threshold
+    for: 5m
+    noDataState: OK
+    execErrState: Error
+    annotations:
+      summary: RDS instance {{ $labels.Series }} has high database connections.
+      description: CloudWatch DatabaseConnections is above 100 for {{ $labels.Series }} in ap-south-1 for at least 5 minutes.
+    labels:
+      severity: warning
+      service: rds
+- orgId: 1
+  name: aws-ec2
+  folder: AWS Infrastructure
+  interval: 1m
+  rules:
+  - uid: aws-ec2-healthcheck-down
+    title: EC2 Instance Health Check Failed
+    condition: C
+    data:
+    - refId: A
+      datasourceUid: de3t7rxv00we8c
+      queryType: ''
+      relativeTimeRange:
+        from: 300
+        to: 0
+      model:
+        datasource:
+          type: cloudwatch
+          uid: de3t7rxv00we8c
+        dimensions:
+          InstanceId: '*'
+        matchExact: true
+        metricEditorMode: 0
+        metricName: StatusCheckFailed_Instance
+        metricQueryType: 0
+        namespace: AWS/EC2
+        period: ''
+        queryMode: Metrics
+        refId: A
+        region: ap-south-1
+        statistic: Maximum
+    - refId: B
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params: []
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - B
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: A
+        intervalMs: 1000
+        maxDataPoints: 43200
+        reducer: last
+        refId: B
+        type: reduce
+    - refId: C
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 100
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - C
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: B
+        intervalMs: 1000
+        maxDataPoints: 43200
+        refId: C
+        type: threshold
+    for: 5m
+    noDataState: OK
+    execErrState: Error
+    annotations:
+      summary: EC2 instance {{ $labels.InstanceId }} health check is failing.
+      description: CloudWatch StatusCheckFailed_Instance is above 100 for InstanceId {{ $labels.InstanceId }} in ap-south-1.
+    labels:
+      severity: critical
+      service: ec2
+  - uid: aws-ec2-high-cpu
+    title: EC2 High CPU
+    condition: C
+    data:
+    - refId: A
+      datasourceUid: de3t7rxv00we8c
+      queryType: ''
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        datasource:
+          type: cloudwatch
+          uid: de3t7rxv00we8c
+        dimensions:
+          InstanceId: '*'
+        matchExact: true
+        metricEditorMode: 0
+        metricName: CPUUtilization
+        metricQueryType: 0
+        namespace: AWS/EC2
+        period: ''
+        queryMode: Metrics
+        refId: A
+        region: ap-south-1
+        statistic: Average
+    - refId: B
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params: []
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - B
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: A
+        intervalMs: 1000
+        maxDataPoints: 43200
+        reducer: last
+        refId: B
+        type: reduce
+    - refId: C
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 85
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - C
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: B
+        intervalMs: 1000
+        maxDataPoints: 43200
+        refId: C
+        type: threshold
+    for: 10m
+    noDataState: OK
+    execErrState: Error
+    annotations:
+      summary: EC2 instance {{ $labels.InstanceId }} CPU is above 85 percent.
+      description: CloudWatch CPUUtilization is above 85 percent for InstanceId {{ $labels.InstanceId }} in ap-south-1.
+    labels:
+      severity: warning
+      service: ec2
+- orgId: 1
+  name: aws-ecs
+  folder: AWS Infrastructure
+  interval: 1m
+  rules:
+  - uid: aws-ecs-high-cpu
+    title: ECS Service High CPU
+    condition: C
+    data:
+    - refId: A
+      datasourceUid: de3t7rxv00we8c
+      queryType: ''
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        datasource:
+          type: cloudwatch
+          uid: de3t7rxv00we8c
+        dimensions:
+          ClusterName: '*'
+          ServiceName: '*'
+        matchExact: true
+        metricEditorMode: 0
+        metricName: CPUUtilization
+        metricQueryType: 0
+        namespace: AWS/ECS
+        period: ''
+        queryMode: Metrics
+        refId: A
+        region: ap-south-1
+        statistic: Average
+    - refId: B
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params: []
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - B
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: A
+        intervalMs: 1000
+        maxDataPoints: 43200
+        reducer: last
+        refId: B
+        type: reduce
+    - refId: C
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 85
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - C
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: B
+        intervalMs: 1000
+        maxDataPoints: 43200
+        refId: C
+        type: threshold
+    for: 10m
+    noDataState: OK
+    execErrState: Error
+    annotations:
+      summary: ECS service CPU utilization is above 85 percent for at least 10 minutes.
+    labels:
+      severity: warning
+      service: ecs
+  - uid: aws-ecs-high-memory
+    title: ECS Service High Memory
+    condition: C
+    data:
+    - refId: A
+      datasourceUid: de3t7rxv00we8c
+      queryType: ''
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        datasource:
+          type: cloudwatch
+          uid: de3t7rxv00we8c
+        dimensions:
+          ClusterName: '*'
+          ServiceName: '*'
+        matchExact: true
+        metricEditorMode: 0
+        metricName: MemoryUtilization
+        metricQueryType: 0
+        namespace: AWS/ECS
+        period: ''
+        queryMode: Metrics
+        refId: A
+        region: ap-south-1
+        statistic: Average
+    - refId: B
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params: []
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - B
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: A
+        intervalMs: 1000
+        maxDataPoints: 43200
+        reducer: last
+        refId: B
+        type: reduce
+    - refId: C
+      datasourceUid: __expr__
+      queryType: ''
+      relativeTimeRange:
+        from: 0
+        to: 0
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 90
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - C
+          reducer:
+            params: []
+            type: last
+          type: query
+        datasource:
+          type: __expr__
+          uid: __expr__
+        expression: B
+        intervalMs: 1000
+        maxDataPoints: 43200
+        refId: C
+        type: threshold
+    for: 10m
+    noDataState: OK
+    execErrState: Error
+    annotations:
+      summary: ECS service memory utilization is above 90 percent for at least 10 minutes.
+    labels:
+      severity: warning
+      service: ecs

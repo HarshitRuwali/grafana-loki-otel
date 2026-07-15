@@ -1,0 +1,48 @@
+apiVersion: 1
+contactPoints:
+- orgId: 1
+  name: teams-webhook
+  receivers:
+  - uid: teams-webhook
+    type: teams
+    disableResolveMessage: false
+    settings:
+      title: '{{ if eq .Status "firing" }}Firing{{ else }}Resolved{{ end }}: {{ .CommonLabels.alertname }}'
+      sectiontitle: '{{ .CommonLabels.grafana_folder }}'
+      message: 'Status: {{ .Status }}
+
+        Alert: {{ .CommonLabels.alertname }}
+
+        {{ with .CommonLabels.Series }}Resource: {{ . }}{{ end }}
+
+        {{ with .CommonLabels.InstanceId }}Instance: {{ . }}{{ end }}
+
+        {{ with .CommonLabels.DBInstanceIdentifier }}DB Instance: {{ . }}{{ end }}
+
+        Service: {{ .CommonLabels.service }}
+
+        Severity: {{ .CommonLabels.severity }}
+
+
+        {{ with .CommonAnnotations.summary }}Summary: {{ . }}{{ end }}
+
+        {{ with .CommonAnnotations.description }}Description: {{ . }}{{ end }}
+
+
+        {{ range .Alerts }}{{ if .Values }}Expression values:
+
+        {{ range $ref, $value := .Values }}- {{ $ref }} = {{ $value }}
+
+        {{ end }}{{ end }}{{ end }}Notes:
+
+        - B is the current metric value after reduction.
+
+        - C is the threshold check result; 1 means breached and 0 means normal.
+
+
+        {{ range .Alerts }}{{ if .GeneratorURL }}Source: {{ .GeneratorURL }}{{ end }}
+
+        {{ if .SilenceURL }}Silence: {{ .SilenceURL }}{{ end }}
+
+        {{ end }}'
+      url: 

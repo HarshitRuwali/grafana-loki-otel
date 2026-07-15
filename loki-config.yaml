@@ -37,13 +37,12 @@ storage_config:
     # shared_store: s3  # Define S3 as the shared store for tsdb shipper
   # filesystem:
   #   directory: /tmp/loki/chunks
-
   aws:
-    bucketnames: bhive-grafana-alloy-logs
+    bucketnames: 
     endpoint: s3.amazonaws.com
     region: ap-south-1
-    access_key_id: 
-    secret_access_key: 
+    access_key_id:
+    secret_access_key:
     # sse_encryption: false  # Set to true if using server-side encryption
     insecure: false  # Set to true if using HTTP instead of HTTPS
 

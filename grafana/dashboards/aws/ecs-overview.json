@@ -1,0 +1,440 @@
+{
+  "__inputs__": [],
+  "__requires__": [
+    {
+      "id": "grafana",
+      "name": "Grafana",
+      "type": "grafana",
+      "version": "11.0.0"
+    },
+    {
+      "id": "cloudwatch",
+      "name": "CloudWatch",
+      "type": "datasource",
+      "version": "1.0.0"
+    }
+  ],
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "lineWidth": 2,
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "ClusterName": "$cluster",
+            "ServiceName": "$service"
+          },
+          "metricEditorMode": 0,
+          "metricName": "CPUUtilization",
+          "metricQueryType": 0,
+          "namespace": "AWS/ECS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "ap-south-1",
+          "statistic": "Average"
+        }
+      ],
+      "title": "ECS Service CPU Utilization",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "lineWidth": 2,
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "ClusterName": "$cluster",
+            "ServiceName": "$service"
+          },
+          "metricEditorMode": 0,
+          "metricName": "MemoryUtilization",
+          "metricQueryType": 0,
+          "namespace": "AWS/ECS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "ap-south-1",
+          "statistic": "Average"
+        }
+      ],
+      "title": "ECS Service Memory Utilization",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "lineWidth": 2,
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "ClusterName": "$cluster",
+            "ServiceName": "$service"
+          },
+          "metricEditorMode": 0,
+          "metricName": "RunningTaskCount",
+          "metricQueryType": 0,
+          "namespace": "ECS/ContainerInsights",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "ap-south-1",
+          "statistic": "Average"
+        }
+      ],
+      "title": "ECS Running Task Count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12,
+            "lineWidth": 2,
+            "showPoints": "never"
+          },
+          "mappings": [],
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "ClusterName": "$cluster",
+            "ServiceName": "$service"
+          },
+          "metricEditorMode": 0,
+          "metricName": "NetworkRxBytes",
+          "metricQueryType": 0,
+          "namespace": "ECS/ContainerInsights",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "ap-south-1",
+          "statistic": "Sum"
+        },
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "$datasource"
+          },
+          "dimensions": {
+            "ClusterName": "$cluster",
+            "ServiceName": "$service"
+          },
+          "metricEditorMode": 0,
+          "metricName": "NetworkTxBytes",
+          "metricQueryType": 0,
+          "namespace": "ECS/ContainerInsights",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "B",
+          "region": "ap-south-1",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "ECS Network Rx/Tx",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "aws",
+    "ecs",
+    "cloudwatch"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "CloudWatch",
+          "value": "cloudwatch"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "cloudwatch",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "ap-south-1",
+          "value": "ap-south-1"
+        },
+        "definition": "ap-south-1",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Region",
+        "multi": false,
+        "name": "region",
+        "options": [
+          {
+            "selected": true,
+            "text": "ap-south-1",
+            "value": "ap-south-1"
+          }
+        ],
+        "query": "ap-south-1",
+        "regex": "",
+        "sort": 1,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "datasource": {
+          "type": "cloudwatch",
+          "uid": "$datasource"
+        },
+        "definition": "dimension_values($region, AWS/ECS, CPUUtilization, ClusterName)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "dimensionKey": "ClusterName",
+          "metricName": "CPUUtilization",
+          "namespace": "AWS/ECS",
+          "queryMode": "dimension_values",
+          "refId": "CloudWatchVariableQueryEditor-Cluster"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "datasource": {
+          "type": "cloudwatch",
+          "uid": "$datasource"
+        },
+        "definition": "dimension_values($region, AWS/ECS, CPUUtilization, ServiceName, {\"ClusterName\":\"$cluster\"})",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Service",
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": {
+          "dimensionKey": "ServiceName",
+          "metricName": "CPUUtilization",
+          "namespace": "AWS/ECS",
+          "queryMode": "dimension_values",
+          "refId": "CloudWatchVariableQueryEditor-Service"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "title": "AWS ECS Overview",
+  "uid": "aws-ecs-overview",
+  "version": 1,
+  "weekStart": ""
+}

@@ -1,0 +1,12 @@
+apiVersion: 1
+
+providers:
+  - name: aws-infrastructure
+    orgId: 1
+    folder: AWS Infrastructure
+    type: file
+    disableDeletion: false
+    editable: true
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards/aws
